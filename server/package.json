@@ -1,0 +1,23 @@
+{
+  "name": "f4s-freecodecamp",
+  "version": "1.0.0",
+  "description": "scraper",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suvelocity/f4s-freecodecamp.git"
+  },
+  "author": "tomeryp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suvelocity/f4s-freecodecamp/issues"
+  },
+  "homepage": "https://github.com/suvelocity/f4s-freecodecamp#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "google-spreadsheet": "^3.0.11"
+  },
+  "scripts": {
+    "run": "node ./main.js"
+  }
+}
