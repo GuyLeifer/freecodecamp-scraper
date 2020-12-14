@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-module.exports = async (usernames) => {
+const scraper = async (usernames) => {
     let cache = null;
     const challengeMap = {};
     async function fetchAllChallenges() {
@@ -13,7 +13,6 @@ module.exports = async (usernames) => {
                 }
                 challengeMap[challenge.block].counter += 1;
             })
-            // console.log(Object.keys(challengeMap).map(challengeKey => `${challengeKey}||${challengeMap[challengeKey].name}||${challengeMap[challengeKey].counter}`).join('\n'))
         }
         return cache;
     }
@@ -22,10 +21,9 @@ module.exports = async (usernames) => {
     async function fetchUserProfile(username) {
         const { data } = await axios.get(`https://api.freecodecamp.org/api/users/get-public-profile?username=${username}`);
         if (!data || !data.entities) {
-            console.log('bad request', username, data)
+            // console.log('bad request', username, data)
             return false;
         }
-        // console.log(data.entities.user[data.result])
         return data.entities.user[data.result];
     }
     
@@ -48,7 +46,7 @@ module.exports = async (usernames) => {
         const myProfile = await fetchUserProfile(username);
         const public = (myProfile || {}).profileUI ? isFullyPublic(myProfile) : false;
         if (!public || !myProfile) {
-            console.log("Not a public profile", username);
+            // console.log("Not a public profile", username);
             return;
         }
 
@@ -69,9 +67,9 @@ module.exports = async (usernames) => {
     }
 
     for (let i = 0; i < progresses.length; i++) {
-        for (let j = 0; j < progresses[j].progress.length; j++) {
+        for (let j = 0; j < progresses[i].progress.length; j++) {
             for (let k = 0; k < j; k++) {
-                if (progresses[k].progress.name === progresses[j].progress.name) {
+                if (progresses[i].progress[k].name === progresses[i].progress[j].name) {
                     progress[j].progress.repetition = true;
                     break;
                 }  
@@ -88,7 +86,6 @@ module.exports = async (usernames) => {
                 dateS = date.toISOString().split('T')[0],
                 challenges = user.progress.filter(obj => new Date(obj.completedDate).toISOString().split('T')[0] === date.toISOString().split('T')[0]),
                 repetition = user.progress.repetition
-                console.log("username", username, "date", dateS, "challenges", challenges, "repetition", repetition)
             } catch (err) {
                 console.log(err.message)
             }
@@ -102,3 +99,5 @@ module.exports = async (usernames) => {
     
     return progresses;
 }
+
+module.exports = scraper;
