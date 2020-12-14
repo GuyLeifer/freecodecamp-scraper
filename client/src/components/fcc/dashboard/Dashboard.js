@@ -11,6 +11,8 @@ function Dashboard() {
 
     const [loading, setLoading] = useState(true);
     const [challengesByDates, setChallengesByDates] = useState([]);
+    const [challengesByBlockName, setChallengesByBlockName] = useState([]);
+    const [challengesByName, setChallengesByName] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -18,6 +20,12 @@ function Dashboard() {
 
             const byDate = await axios.get('/fcc/by-date');
             setChallengesByDates(byDate.data);
+
+            const byBlockName = await axios.get('/fcc/by-block-name');
+            setChallengesByBlockName(byBlockName.data);
+
+            const byName = await axios.get('/fcc/by-name');
+            setChallengesByName(byName.data);
 
             setLoading(false)            
         })()
@@ -32,13 +40,13 @@ function Dashboard() {
             : 
 
                     <div className="dashboard">
-                        {/* <div className="firstLine">
+                        <div className="firstLine">
                             <div className="chart">
-                                <h2>Links Statistics</h2>
+                                <h2>Block Names Statistics</h2>
                                 <BarChart
                                 width={700}
                                 height={300}
-                                data={links}
+                                data={challengesByBlockName}
                                 margin={{
                                     top: 5, right: 30, left: 20, bottom: 5,
                                 }}
@@ -47,29 +55,30 @@ function Dashboard() {
                                     <XAxis dataKey="name" />
                                     <YAxis />
                                     <Tooltip />
-                                    <Bar dataKey="count" fill="purple" />
-                                    <Brush startIndex={0} endIndex={4}/>
+                                    <Bar dataKey="count" fill="#2C3A47" />
+                                    <Brush startIndex={0} endIndex={3}/>
                                 </BarChart>
                             </div>
-                            <div className="chart authorChart">
-                                <h2 className="authorsChartH2">Authors Statistics</h2>
+                            <div className="chart">
+                                <h2>Challenges Statistics</h2>
                                 <BarChart
                                 width={700}
                                 height={300}
-                                data={linksByAuthors}
+                                data={challengesByName}
                                 margin={{
                                     top: 5, right: 30, left: 20, bottom: 5,
                                 }}
                                 >
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="_id" />
+                                    <XAxis dataKey="name" />
                                     <YAxis />
                                     <Tooltip />
-                                    <Bar dataKey="count" fill="green" />
-                                    <Brush startIndex={0} endIndex={5}/>
+                                    <Bar dataKey="count" fill="#2C3A47" />
+                                    <Brush startIndex={0} endIndex={10}/>
                                 </BarChart>
                             </div>
-                        </div> */}
+                            
+                        </div>
                             <div className="chart">
                             <h2>Date Statistics</h2>
                             <LineChart

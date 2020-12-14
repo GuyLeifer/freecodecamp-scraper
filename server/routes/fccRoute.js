@@ -10,6 +10,68 @@ router.get('/users', async (req, res) => {
     const fcc = await scraper(users);
     res.send(fcc);
 })
+router.get('/by-block-name', async (req, res) => {
+    try {
+        const fcc = await scraper(users);
+        let names = [];
+        fcc.forEach(user => {
+            user.progress.forEach(challenge => {
+                const name = challenge.blockName;
+                names.push(name)
+            })
+        })
+        names = names.sort();
+        let challengesByBlockName = [];
+        names.forEach(name => {
+            const index = challengesByBlockName.findIndex(challenge => challenge.name === name)
+            if (index === -1) {               
+                challengesByBlockName.push(
+                    {
+                        name: name,
+                        count: 1
+                    }
+                )
+            } else {
+                challengesByBlockName[index].count++;
+            }
+        })
+        challengesByBlockName.sort((a, b) => b.count - a.count)
+        res.send(challengesByBlockName);
+    } catch (err) {
+        console.log(err.message);
+    }
+})
+router.get('/by-name', async (req, res) => {
+    try {
+        const fcc = await scraper(users);
+        let names = [];
+        fcc.forEach(user => {
+            user.progress.forEach(challenge => {
+                const name = challenge.name;
+                names.push(name)
+            })
+        })
+        names = names.sort();
+        let challengesByName = [];
+        names.forEach(name => {
+            const index = challengesByName.findIndex(challenge => challenge.name === name)
+            if (index === -1) {               
+                challengesByName.push(
+                    {
+                        name: name,
+                        count: 1
+                    }
+                )
+            } else {
+                challengesByName[index].count++;
+            }
+        })
+        challengesByName.sort((a, b) => b.count - a.count)
+        res.send(challengesByName);
+    } catch (err) {
+        console.log(err.message);
+    }
+})
 router.get('/by-date', async (req, res) => {
     try {
         const fcc = await scraper(users);
