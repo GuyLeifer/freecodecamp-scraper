@@ -11,9 +11,8 @@
 // })();
 
 const app = require('./app');
-const scraper = require('./scraper');
 
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 8002;
 
 app.listen(port, () => {
     console.log(`app listening at http://localhost:${port}`)
