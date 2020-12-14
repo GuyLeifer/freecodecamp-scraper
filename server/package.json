@@ -15,9 +15,11 @@
   "homepage": "https://github.com/suvelocity/f4s-freecodecamp#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "google-spreadsheet": "^3.0.11"
+    "express": "^4.17.1",
+    "google-spreadsheet": "^3.0.11",
+    "nodemon": "^2.0.6"
   },
   "scripts": {
-    "run": "node ./main.js"
+    "dev": "nodemon index.js"
   }
 }

@@ -52,45 +52,53 @@ module.exports = async (usernames) => {
             return;
         }
 
-        const completedChallengeWithNames = myProfile.completedChallenges.map(challenge=>addChallengeName(allChallenges, challenge));
-        // console.log(completedChallengeWithNames.map(challenge=> new Date(challenge.completedDate)))
+        const completedChallengeWithNames = myProfile.completedChallenges.map(challenge => addChallengeName(allChallenges, challenge));
         return completedChallengeWithNames;
     }
 
     function chunks(array, size) {
-        return Array.apply(0,{length: Math.ceil(array.length / size)}).map((_, index) => array.slice(index*size, (index+1)*size))
+        return Array.apply(0,{length: Math.ceil(array.length / size)}).map((_, index) => array.slice(index * size, (index + 1) * size))
     }
     const usersChunks = chunks(usernames, 10);
 
     let progresses = [];
     for (const chunk of usersChunks) {
-        const promises = chunk.map(async username => ({username, progress: await getUserProgress(username)}));
+        const promises = chunk.map(async username => ({ username, progress: await getUserProgress(username) }));
         newProgresses = await Promise.all(promises);
         progresses = progresses.concat(newProgresses.filter(obj => obj.progress));
     }
 
     for (let i = 0; i < progresses.length; i++) {
-        for (let j = i + 1; j < progresses[j].length; j++) {
-            if (progresses[i].progress.name === progresses[i].progress.name) progress[j].repetition = true;
+        for (let j = 0; j < progresses[j].progress.length; j++) {
+            for (let k = 0; k < j; k++) {
+                if (progresses[k].progress.name === progresses[j].progress.name) {
+                    progress[j].progress.repetition = true;
+                    break;
+                }  
+            } 
         }
     }
     
-
-    // const lastDateUpdated = 
-    date = new Date(lastDateUpdated || '2020-06-01')
+    let date = new Date('2020-06-01')
     while (date <= new Date()) {
 
-        progresses.forEach(async(progress) => {
-            await axios.post('/??', {
-                username: progress.username,
-                date: date.toISOString().split('T')[0],
-                challenges: progress.progress.filter(obj => new Date(obj.completedDate).toISOString().split('T')[0] === date.toISOString().split('T')[0]),
-                repetition: progress.repetition
-            })
+        progresses.forEach((user) => {
+            try {
+                username = user.username,
+                dateS = date.toISOString().split('T')[0],
+                challenges = user.progress.filter(obj => new Date(obj.completedDate).toISOString().split('T')[0] === date.toISOString().split('T')[0]),
+                repetition = user.progress.repetition
+                console.log("username", username, "date", dateS, "challenges", challenges, "repetition", repetition)
+            } catch (err) {
+                console.log(err.message)
+            }
         })
+
         
         date.setDate(date.getDate() + 1)
     }
+    
+    console.log(progresses)
     
     return progresses;
 }
