@@ -1,0 +1,12 @@
+.challengeTitle {
+    color: #2C3A47;
+    cursor: pointer;
+}
+/* .subChallenges {
+    display: none;
+} */
+.challengeHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

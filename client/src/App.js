@@ -6,6 +6,9 @@ import Footer from './components/footer/Footer';
 import About from './components/about/About';
 import Users from './components/fcc/users/Users';
 import Dashboard from './components/fcc/dashboard/Dashboard';
+import Challenges from './components/fcc/challenges/Challenges';
+import ChallengeId from './components/fcc/challenges/components/challenges/ChallengeId';
+import SubChallengeId from './components/fcc/challenges/components/subChallenges/SubChallengeId';
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
@@ -30,6 +33,9 @@ function App() {
           <Switch>
             <PrivateRoute exact path="/" component={Dashboard} />
             <PrivateRoute exact path="/users" component={Users} />
+            <PrivateRoute exact path="/challenges" component={Challenges} />
+            <PrivateRoute exact path="/challenges/:challenge" component={ChallengeId} />
+            <PrivateRoute exact path="/challenges/:challenge/:subChallenge" component={SubChallengeId} />
             <Route exact path="/about" component={About} />
             <Container
             className="d-flex align-items-center justify-content-center"

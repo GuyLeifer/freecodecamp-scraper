@@ -18,14 +18,19 @@ function Dashboard() {
         (async () => {
             setLoading(true) 
 
-            const byDate = await axios.get('/fcc/by-date');
-            setChallengesByDates(byDate.data);
+            // const byDate = await axios.get('/fcc/by-date');
+            // setChallengesByDates(byDate.data);
 
-            const byBlockName = await axios.get('/fcc/by-block-name');
-            setChallengesByBlockName(byBlockName.data);
+            // const byBlockName = await axios.get('/fcc/by-block-name');
+            // setChallengesByBlockName(byBlockName.data);
 
-            const byName = await axios.get('/fcc/by-name');
-            setChallengesByName(byName.data);
+            // const byName = await axios.get('/fcc/by-name');
+            // setChallengesByName(byName.data);
+
+            const { data } = await axios.get('/fcc/dashboard');
+            setChallengesByBlockName(data[0])
+            setChallengesByName(data[1])
+            setChallengesByDates(data[2])
 
             setLoading(false)            
         })()

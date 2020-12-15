@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import './Users.css';
+
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 function Users() {
@@ -31,11 +33,19 @@ function Users() {
                     <div id={user.username} className="userProgresses" style={{display: "none"}}>
                         {user.progress.map(progress => 
                             <div className="progress">
-                                <div className="progressDate">
-                                {new Date(progress.completedDate).toLocaleString()}
+                                <div className="progressDate progressDiv">
+                                    {new Date(progress.completedDate).toLocaleString()}
                                 </div>
-                                <div className="progressName">{progress.name}</div>
-                                <div className="progressBlockName">{progress.blockName}</div>
+                                <div className="progressDiv">
+                                    <Link to={`name/${progress.name}`}>
+                                        <span className="progressName">{progress.name}</span>
+                                    </Link>
+                                </div>
+                                <div className="progressDiv">
+                                    <Link to={`block-name/${progress.blockName}`} >
+                                        <div className="progressBlockName">{progress.blockName}</div>
+                                    </Link>
+                                </div>
                             </div>
                         )}
                     </div>

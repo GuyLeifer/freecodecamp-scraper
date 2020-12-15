@@ -7,6 +7,7 @@ import Searchbar from './search/Searchbar';
 // icons
 import homeIcon from './images/homeIcon.png';
 import usersIcon from './images/usersIcon.png';
+import chellengesIcon from './images/chellengesIcon.png';
 import aboutIcon from './images/aboutIcon.jpg';
 import accountIcon from './images/accountIcon.jpg';
 
@@ -45,6 +46,11 @@ function Navbar() {
             <div className="postsLink">
                 <Link to="/users">
                     <img className="navIcon" src={usersIcon} alt="Posts" />
+                </Link>
+            </div>
+            <div className="challengesLink">
+                <Link to="/challenges">
+                    <img className="navIcon" src={chellengesIcon} alt="Challenges" />
                 </Link>
             </div>
             {currentUser && <Searchbar />}     

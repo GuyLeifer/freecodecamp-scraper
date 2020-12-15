@@ -3,14 +3,15 @@
     font-family: 'Permanent Marker', cursive;
     font-size: 120%;
 }
-.WhatsAppLinkImage {
-    border-radius: 10%;
+.freeCodeCampImage {
+    background-color: #2C3A47;
+    /* border-radius: 10%; */
     max-width: 40%;
     margin: 3%;
     transition: 2s;
     cursor: pointer;
 }
-.WhatsAppLinkImage:hover {
+.freeCodeCampImage:hover {
     border-radius: 40%;
     transition: 2s;
 }

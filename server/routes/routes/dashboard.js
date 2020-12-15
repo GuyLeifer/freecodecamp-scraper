@@ -1,22 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const scraper = require('../scraper')
+const scraper = require('../../scraper')
+const users = require('../../users')
 
-let users = ["guyleifer", "nitzo"]
-
-
-// const fcc = scraper(users);
-
-router.use('/dashboard', require('./routes/dashboard'))
-router.use('/users', require('./routes/users'))
-router.use('/challenges', require('./routes/challenges'))
-
-
-router.get('/by-block-name', async (req, res) => {
+router.get('/', async (req, res) => {
+    const fcc = await scraper(users);
+    // by block name
     try {
-        const fcc = await scraper(users);
-        let names = [];
+    let names = [];
         fcc.forEach(user => {
             user.progress.forEach(challenge => {
                 const name = challenge.blockName;
@@ -39,15 +31,9 @@ router.get('/by-block-name', async (req, res) => {
             }
         })
         challengesByBlockName.sort((a, b) => b.count - a.count)
-        res.send(challengesByBlockName);
-    } catch (err) {
-        console.log(err.message);
-    }
-})
-router.get('/by-name', async (req, res) => {
-    try {
-        const fcc = await scraper(users);
-        let names = [];
+
+        // by name
+        names = [];
         fcc.forEach(user => {
             user.progress.forEach(challenge => {
                 const name = challenge.name;
@@ -70,14 +56,8 @@ router.get('/by-name', async (req, res) => {
             }
         })
         challengesByName.sort((a, b) => b.count - a.count)
-        res.send(challengesByName);
-    } catch (err) {
-        console.log(err.message);
-    }
-})
-router.get('/by-date', async (req, res) => {
-    try {
-        const fcc = await scraper(users);
+
+        //by date
         let dates = [];
         fcc.forEach(user => {
             user.progress.forEach(challenge => {
@@ -100,7 +80,8 @@ router.get('/by-date', async (req, res) => {
                 challengesByDate[index].count++;
             }
         })
-        res.send(challengesByDate);
+
+        res.send([challengesByBlockName, challengesByName, challengesByDate]);
     } catch (err) {
         console.log(err.message);
     }
