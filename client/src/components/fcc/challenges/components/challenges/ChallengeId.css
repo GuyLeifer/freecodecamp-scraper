@@ -1,0 +1,5 @@
+.ChallengeId {
+    display: flex;
+    justify-content: space-between;
+    margin: 3% 1%;
+}
