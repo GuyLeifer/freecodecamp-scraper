@@ -34,8 +34,13 @@ function Challenges() {
                         </div>
                         <div id={(superBlock.name)} style={{display: "none"}}>
                             {superBlock.challenges.map(challenge => (
-                                <div id={challenge.name} className="Challenge" >
+                                <div id={challenge.name} className="Challenge">
+                                    <div className="challengeHeader">
                                     <h4 className="challengeTitle" onClick={() => setDisplay(challenge.dashedName)}>{challenge.name + " (" + challenge.subChallenges.length + ")"}</h4>
+                                    <Link to={`/challenges/${challenge.dashedName}`}>
+                                        (Go To Page)
+                                    </Link>
+                                    </div>
                                     <div id={challenge.dashedName} style={{display: "none"}}>
                                     {challenge.subChallenges.map(subChallenge => (
                                         <Link to={`/challenges/${challenge.name}/${subChallenge.dashedName}`} >
