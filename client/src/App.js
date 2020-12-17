@@ -7,6 +7,7 @@ import About from './components/about/About';
 import Users from './components/fcc/users/Users';
 import Dashboard from './components/fcc/dashboard/Dashboard';
 import Challenges from './components/fcc/challenges/Challenges';
+import SuperChallengeId from './components/fcc/challenges/components/superChallenges/SuperChallengeId';
 import ChallengeId from './components/fcc/challenges/components/challenges/ChallengeId';
 import SubChallengeId from './components/fcc/challenges/components/subChallenges/SubChallengeId';
 
@@ -34,6 +35,7 @@ function App() {
             <PrivateRoute exact path="/" component={Dashboard} />
             <PrivateRoute exact path="/users" component={Users} />
             <PrivateRoute exact path="/challenges" component={Challenges} />
+            <PrivateRoute exact path="/challenges/:superChallenge" component={SuperChallengeId} />
             <PrivateRoute exact path="/challenges/:superChallenge/:challenge" component={ChallengeId} />
             <PrivateRoute exact path="/challenges/:superChallenge/:challenge/:subChallenge" component={SubChallengeId} />
             <Route exact path="/about" component={About} />

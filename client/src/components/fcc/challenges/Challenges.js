@@ -32,8 +32,8 @@ function Challenges() {
                         <div className="superBlockHeader">
                             <h2 className="superBlockTitle" onClick={() => setDisplay(superBlock.name)}>{superBlock.name + " (" + superBlock.challenges.length + ")"}</h2>
                             <Link to={`/challenges/${(superBlock.name).toLowerCase().replaceAll(" ", "-")}`}>
-                                        (Go To Page)
-                                    </Link>
+                                (Go To Page)
+                            </Link>
                         </div>
                         <div id={(superBlock.name)} style={{display: "none"}}>
                             {superBlock.challenges.map(challenge => (

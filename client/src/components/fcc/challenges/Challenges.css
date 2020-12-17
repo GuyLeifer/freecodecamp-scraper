@@ -1,3 +1,8 @@
+.superBlockHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .superBlockTitle {
     /* color: #2C3A47; */
     cursor: pointer;
