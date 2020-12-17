@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 function SubChallengeId( { match } ) {
+    console.log( match)
 
     const subChallengeId = match.params.subChallenge;
 
@@ -33,9 +34,12 @@ function SubChallengeId( { match } ) {
                         </div>
                         <div className="subChallenges">
                             <h3>Challenges</h3>
-                                <Link to={`challenges/${subChallenge.challenge.dashedName}`} >
-                                    <div className="Challenge">{subChallenge.challenge.name}</div>
-                                </Link>
+                            <Link to={`challenges/${subChallenge.challenge.dashedName}`} >
+                                <div className="Challenge">{subChallenge.challenge.name}</div>
+                            </Link>
+                            <Link to={`challenges/${subChallenge.challenge.dashedName}`} >
+                                <div className="Challenge">{subChallenge.challenge.name}</div>
+                            </Link>
                         </div>
                     </div>
                 </div>

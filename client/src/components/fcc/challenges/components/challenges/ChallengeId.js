@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 function ChallengeId( { match } ) {
+    console.log( match)
 
     const challengeId = match.params.challenge;
 

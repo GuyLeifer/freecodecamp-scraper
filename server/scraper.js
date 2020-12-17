@@ -39,6 +39,7 @@ const scraper = async (usernames) => {
             name: challengeNode.node.dashedName,
             blockName: challengeNode.node.fields.blockName,
             block: challengeNode.node.block,
+            superBlock:  challengeNode.node.superBlock
         };
     }
     

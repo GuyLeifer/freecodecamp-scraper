@@ -34,8 +34,8 @@ function App() {
             <PrivateRoute exact path="/" component={Dashboard} />
             <PrivateRoute exact path="/users" component={Users} />
             <PrivateRoute exact path="/challenges" component={Challenges} />
-            <PrivateRoute exact path="/challenges/:challenge" component={ChallengeId} />
-            <PrivateRoute exact path="/challenges/:challenge/:subChallenge" component={SubChallengeId} />
+            <PrivateRoute exact path="/challenges/:superChallenge/:challenge" component={ChallengeId} />
+            <PrivateRoute exact path="/challenges/:superChallenge/:challenge/:subChallenge" component={SubChallengeId} />
             <Route exact path="/about" component={About} />
             <Container
             className="d-flex align-items-center justify-content-center"

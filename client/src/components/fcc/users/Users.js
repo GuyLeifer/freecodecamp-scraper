@@ -36,14 +36,19 @@ function Users() {
                                 <div className="progressDate progressDiv">
                                     {new Date(progress.completedDate).toLocaleString()}
                                 </div>
-                                <div className="progressDiv">
-                                    <Link to={`name/${progress.name}`}>
-                                        <span className="progressName">{progress.name}</span>
+                                <div className="progressDiv progressSuperBlockName">
+                                    <Link to={`challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}`} >
+                                        <div className="SuperBlockName">{progress.superBlock}</div>
                                     </Link>
                                 </div>
-                                <div className="progressDiv">
-                                    <Link to={`block-name/${progress.blockName}`} >
-                                        <div className="progressBlockName">{progress.blockName}</div>
+                                <div className="progressDiv progressBlockName">
+                                    <Link to={`challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}/${progress.block}`} >
+                                        <div className="BlockName">{progress.blockName}</div>
+                                    </Link>
+                                </div>
+                                <div className="progressDiv progressName">
+                                    <Link to={`challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}/${progress.block}/${progress.name}`}>
+                                        <span className="Name">{progress.name}</span>
                                     </Link>
                                 </div>
                             </div>
