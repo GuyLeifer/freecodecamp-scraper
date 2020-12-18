@@ -10,6 +10,7 @@ import Challenges from './components/fcc/challenges/Challenges';
 import SuperChallengeId from './components/fcc/challenges/components/superChallenges/SuperChallengeId';
 import ChallengeId from './components/fcc/challenges/components/challenges/ChallengeId';
 import SubChallengeId from './components/fcc/challenges/components/subChallenges/SubChallengeId';
+import UserId from './components/fcc/users/components/UserId';
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
@@ -34,6 +35,7 @@ function App() {
           <Switch>
             <PrivateRoute exact path="/" component={Dashboard} />
             <PrivateRoute exact path="/users" component={Users} />
+            <PrivateRoute exact path="/users/:userId" component={UserId} />
             <PrivateRoute exact path="/challenges" component={Challenges} />
             <PrivateRoute exact path="/challenges/:superChallenge" component={SuperChallengeId} />
             <PrivateRoute exact path="/challenges/:superChallenge/:challenge" component={ChallengeId} />

@@ -6,11 +6,11 @@ input[type="search"] {
     
 	display: block; 
     width: 100%; 
-    font-family: 'Gloria Hallelujah', cursive;
+    font-family: 'Permanent Marker', cursive;
 	letter-spacing: 1px;        
-	text-shadow: 0 0 2px black;       
+	text-shadow: 0 0 2px #2C3A47;       
     font-size: large;
-    border: 1px solid grey;
+    border: 1px solid #2C3A47;
     border-radius: 100px;
     padding: 2px 23px 2px 30px;
     outline: 0;
@@ -50,8 +50,8 @@ input[type="submit"]:hover {
     width: 100%;
 }
 .optionLink {
-    background-color: #25D366;
-    color: black;
+    background-color: #2C3A47;
+    color: white;
     margin: 5px auto;
     cursor: pointer;
     width: 100%;
@@ -70,4 +70,5 @@ input[type="submit"]:hover {
 .optionIcon {
     width: 100%;
     border-radius:50%;
+    background-color: white;
 }

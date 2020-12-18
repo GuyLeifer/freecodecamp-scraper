@@ -5,7 +5,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 function SubChallengeId( { match } ) {
-    console.log( match)
 
     const subChallengeId = match.params.subChallenge;
 
@@ -28,16 +27,19 @@ function SubChallengeId( { match } ) {
                     <div>Sub-Challenge Name:</div>
                     <h2>{subChallenge.name}</h2>
                     <div className="subChallengeId">
+                        <div className="superChallenge">
+                            <h3>Super Challenge</h3>
+                            <Link to={`/challenges/${subChallenge.challenge.superBlock.toLowerCase().replaceAll(" ", "-")}`} >
+                                <div className="Challenge">{subChallenge.challenge.superBlock}</div>
+                            </Link>
+                        </div>
                         <div className="subChallengeCompleted">
-                            <h3>Users Completed Challenge</h3>
+                            <h3>Users Completed Challenge ({completed.length})</h3>
                             {completed.map(user => <div>{user}</div>)}
                         </div>
-                        <div className="subChallenges">
-                            <h3>Challenges</h3>
-                            <Link to={`challenges/${subChallenge.challenge.dashedName}`} >
-                                <div className="Challenge">{subChallenge.challenge.name}</div>
-                            </Link>
-                            <Link to={`challenges/${subChallenge.challenge.dashedName}`} >
+                        <div className="challenge">
+                            <h3>Challenge</h3>
+                            <Link to={`/challenges/${subChallenge.challenge.superBlock.toLowerCase().replaceAll(" ", "-")}/${subChallenge.challenge.dashedName}`}>
                                 <div className="Challenge">{subChallenge.challenge.name}</div>
                             </Link>
                         </div>

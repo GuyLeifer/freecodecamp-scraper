@@ -11,6 +11,7 @@ let users = ["guyleifer", "nitzo"]
 router.use('/dashboard', require('./routes/dashboard'))
 router.use('/users', require('./routes/users'))
 router.use('/challenges', require('./routes/challenges'))
+router.use('/search', require('./routes/search'))
 
 
 router.get('/by-block-name', async (req, res) => {

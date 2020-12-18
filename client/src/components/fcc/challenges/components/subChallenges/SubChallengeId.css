@@ -1,0 +1,14 @@
+.subChallengeId {
+    display: flex;
+    justify-content: space-between;
+    margin: 2%;
+}
+.superChallenge {
+    width: 30%;
+}
+.subChallengeCompleted {
+    width: 40%;
+}
+.challenge {
+    width: 30%;
+}
