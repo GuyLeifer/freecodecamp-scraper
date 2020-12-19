@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const scraper = require('../../scraper')
-const users = require('../../users')
+const { users } = require('../../users')
 
 router.get('/', async (req, res) => {
     const fcc = await scraper(users);
@@ -88,7 +88,7 @@ router.get('/', async (req, res) => {
             }
         )).sort((a, b) => b.count - a.count);
 
-        res.send([challengesByBlockName, challengesByName, challengesByDate, usersCount]);
+        res.send([challengesByBlockName, challengesByName, challengesByDate, usersCount, fcc.length]);
     } catch (err) {
         console.log(err.message);
     }

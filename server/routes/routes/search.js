@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { fetchSuperChallenges } = require('./functions');
-const users = require('../../users');
+const { users } = require('../../users')
 
 router.get('/:word', async (req, res) => {
     const { word } = req.params;

@@ -13,3 +13,9 @@
 .recharts-wrapper {
     margin : 0 auto;
 }
+.noUsers {
+    font-size: 150%;
+}
+.navigateIcon {
+    height: 50px;
+}

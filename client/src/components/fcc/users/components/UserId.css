@@ -1,0 +1,19 @@
+.headerDiv {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.deleteDiv {
+    color: #2C3A47;
+    margin: 20px;
+}
+.deletePlaylistIcon {
+    background-color:#2C3A47;
+    border-radius: 50%;
+    height: 50px;
+    cursor: pointer;
+    transition: 500ms;  
+}
+.deletePlaylistIcon:hover {
+    background-color:red;
+}

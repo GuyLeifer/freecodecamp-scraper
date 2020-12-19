@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const scraper = require('../../scraper');
-const users = require('../../users');
+const { users } = require('../../users')
 
 async function fetchSuperChallenges() {
     const challengeMap = [];

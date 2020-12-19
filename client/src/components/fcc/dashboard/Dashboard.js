@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
 
+import plusIcon from '../../navbar/images/plusIcon.png';
+
 import axios from 'axios';
 import {
     BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Brush,
@@ -14,12 +16,14 @@ function Dashboard() {
     const [challengesByBlockName, setChallengesByBlockName] = useState([]);
     const [challengesByName, setChallengesByName] = useState([]);
     const [usersCount, setUsersCount] = useState([]);
+    const [users, setUsers] = useState();
 
     useEffect(() => {
         (async () => {
             setLoading(true) 
 
             const { data } = await axios.get('/fcc/dashboard');
+            setUsers(data[4])
             setChallengesByBlockName(data[0])
             setChallengesByName(data[1])
             setChallengesByDates(data[2])
@@ -33,7 +37,7 @@ function Dashboard() {
         <>
             { loading ?
                 <h2>Loading ...</h2>
-            : 
+            : users !== 0 ?
                 <div className="dashboard">                    
                     <div className="firstLine">
                         <div className="chart">
@@ -111,7 +115,14 @@ function Dashboard() {
                         </BarChart>
                     </div>
                 </div>        
-            }        
+            : 
+                <div className="noUsers">
+                    <h2>There Are No Users</h2>
+                    <p>Please Add At Least One User To Start</p>
+                    <p>In The Navbar, Click On</p> 
+                    <img className="navigateIcon" src={plusIcon} alt="Add User"></img>
+                </div>
+            } 
     </>
     )
 }

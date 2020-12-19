@@ -32,5 +32,34 @@
 }
 .username {
     cursor: pointer;
-    font-size: 150%;
+    font-size: 200%;
+}
+.headerDiv {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.headerDiv * {
+    width: 33%;
+}
+.deleteDiv {
+    color: #2C3A47;
+    margin: 20px;
+}
+.deleteP {
+    margin: 10px;
+}
+.deletePlaylistIcon {
+    background-color:#2C3A47;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    transition: 500ms;  
+}
+.deletePlaylistIcon:hover {
+    background-color:red;
+}
+.challengeCompleted {
+    cursor: pointer;
 }

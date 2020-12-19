@@ -1,0 +1,13 @@
+.error {
+    color: red;
+}
+#userAddForm {
+    text-align: center;
+}
+#userUpload {
+    text-align: center;
+}
+#userLabel {
+    font-weight: bold;
+    font-size: 130%;
+}
