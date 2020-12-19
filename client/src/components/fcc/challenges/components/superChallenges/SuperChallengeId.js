@@ -5,7 +5,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 function SuperChallengeId( { match } ) {
-    console.log( match)
 
     const superChallengeId = match.params.superChallenge;
 
@@ -16,7 +15,6 @@ function SuperChallengeId( { match } ) {
     useEffect(() => {
         (async () => {
             const { data }  = await axios.get(`/fcc/challenges/super-challenge/${superChallengeId}`);
-            console.log("data",data[0][0])
             setSuperChallenge(data[0][0]);
             setCompleted(data[1]);
             setStarted(data[2]);

@@ -5,7 +5,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 function ChallengeId( { match } ) {
-    console.log("match", match)
 
     const challengeId = match.params.challenge;
 
@@ -16,7 +15,6 @@ function ChallengeId( { match } ) {
     useEffect(() => {
         (async () => {
             const { data }  = await axios.get(`/fcc/challenges/${challengeId}`);
-            console.log(data[0])
             setChallenge(data[0]);
             setCompleted(data[1]);
             setStarted(data[2]);

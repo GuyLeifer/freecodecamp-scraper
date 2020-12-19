@@ -1,7 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import './Users.css';
 
-import deleteIcon from './images/deleteIcon.png'
+import deleteIcon from './images/deleteIcon.png';
+import plusIcon from '../../navbar/images/plusIcon.png'
 
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -37,7 +38,7 @@ function Users() {
         <>
             { loading ?
                 <h2>Loading ...</h2>
-            :
+            : challengesByUser.length !== 0 ?
             <div>
                 <h2>All Users ({challengesByUser.length})</h2>
                 {challengesByUser.map(user => (
@@ -76,6 +77,13 @@ function Users() {
                     </div>
                 ))}
             </div>
+            : 
+                <div className="noUsers">
+                    <h2>There Are No Users</h2>
+                    <p>Please Add At Least One User To Start</p>
+                    <p>In The Navbar, Click On</p> 
+                    <img className="navigateIcon" src={plusIcon} alt="Add User"></img>
+                </div>
             }
         </>
     )

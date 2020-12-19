@@ -97,7 +97,7 @@ function Dashboard() {
                         </LineChart>
                     </div> 
                     <div className="chart">
-                        <h2>Users Statistics</h2>
+                        <h2>Challenges By User Statistics</h2>
                         <BarChart
                         width={1500}
                         height={300}

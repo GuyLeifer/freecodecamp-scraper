@@ -16,7 +16,6 @@ function UserId({ match }) {
     useEffect(() => {
         (async () => {
             const { data }  = await axios.get(`/fcc/users/${userId}`);
-            console.log(data[0]);
             setUser(data[0]);
             setLoading(false)
         })()

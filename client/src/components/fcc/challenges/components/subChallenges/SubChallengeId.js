@@ -14,7 +14,6 @@ function SubChallengeId( { match } ) {
     useEffect(() => {
         (async () => {
             const { data }  = await axios.get(`/fcc/challenges/sub-challenge/${subChallengeId}`);
-            console.log(data[0])
             setSubChallenge(data[0]);
             setCompleted(data[1]);
         })()

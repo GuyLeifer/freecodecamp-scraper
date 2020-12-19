@@ -63,3 +63,9 @@
 .challengeCompleted {
     cursor: pointer;
 }
+.noUsers {
+    font-size: 150%;
+}
+.navigateIcon {
+    height: 50px;
+}

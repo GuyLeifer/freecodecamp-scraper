@@ -17,7 +17,6 @@ function Searchbar() {
         } else {
             try {
                 const { data } = await axios.get(`/fcc/search/${e.target.value}`);
-                console.log(data)
                 if(data) {
                     setOptions(data);
                 } else {
