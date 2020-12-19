@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+
+## server image
+  server-fcc-scraper:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: server-fcc-scraper
+    stdin_open: true
+    volumes:
+      - ./server:/usr/app/server
+      # - '/usr/app/server/node_modules'
+    ports:
+      - '8002:8002'
+    environment:
+      PORT: 8002
+    networks:
+      frontapp_b:
+        ipv4_address: 175.22.0.21
+
+
+## client image
+  app-fcc-scraper:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: app-fcc-scraper
+    stdin_open: true
+    volumes:
+      - ./client:/usr/app/client
+    ports:
+      - '4000:3000'
+    depends_on:
+      - server-fcc-scraper ## server image
+    networks:
+      frontapp_b:
+        ipv4_address: 175.22.0.20
+
+networks:
+  frontapp_b:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 175.22.0.0/16
