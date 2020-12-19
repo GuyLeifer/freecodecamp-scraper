@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@800&display=swap');
+.Header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration-line: underline;
+    /* color: #25D366; */
+    font-family: 'BioRhyme', serif;
+    margin:2%;
+    color: #2C3A47;
+}
+.Header h1 {
+    font-size: 400%;
+}
+.freeCodeCampIcon {
+    height: 80px;
+    margin: 20px;
+    border-radius: 50%;
+}

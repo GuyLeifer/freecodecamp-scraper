@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Gloria+Hallelujah&family=Gochi+Hand&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+.chart {
+    font-family: 'Bebas Neue', cursive;
+    margin: 1% 1%;
+    /* color: lightslategray; */
+}
+.firstLine {
+    display: flex;
+    justify-content: space-evenly;
+}
+.recharts-wrapper {
+    margin : 0 auto;
+}
+.noUsers {
+    font-size: 150%;
+}
+.navigateIcon {
+    height: 50px;
+}

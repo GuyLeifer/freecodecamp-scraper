@@ -1,0 +1,21 @@
+.superBlockHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.superBlockTitle {
+    /* color: #2C3A47; */
+    cursor: pointer;
+}
+.challengeTitle {
+    color: #2C3A47;
+    cursor: pointer;
+}
+/* .subChallenges {
+    display: none;
+} */
+.challengeHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

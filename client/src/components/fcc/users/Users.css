@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@800&display=swap');
+
+.userProgressesDiv {
+    font-family: 'BioRhyme', serif;
+}
+.progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.progressDiv {
+    text-align: left;
+}
+.progressSuperBlockName {
+    color: black;
+    text-decoration: none;
+    width: 25%;
+}
+.progressBlockName {
+    color: black;
+    text-decoration: none;
+    width: 25%;
+}
+.progressName {
+    font-size: 120%;
+    color: black;
+    text-decoration: none;
+    width: 30%;
+}
+.progressDate {
+    width: 20%;
+}
+.username {
+    cursor: pointer;
+    font-size: 200%;
+}
+.headerDiv {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.headerDiv * {
+    width: 33%;
+}
+.deleteDiv {
+    color: #2C3A47;
+    margin: 20px;
+}
+.deleteP {
+    margin: 10px;
+}
+.deletePlaylistIcon {
+    background-color:#2C3A47;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    transition: 500ms;  
+}
+.deletePlaylistIcon:hover {
+    background-color:red;
+}
+.challengeCompleted {
+    cursor: pointer;
+}
+.noUsers {
+    font-size: 150%;
+}
+.navigateIcon {
+    height: 50px;
+}
