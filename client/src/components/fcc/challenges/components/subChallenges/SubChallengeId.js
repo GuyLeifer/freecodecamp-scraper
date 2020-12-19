@@ -35,7 +35,11 @@ function SubChallengeId( { match } ) {
                         </div>
                         <div className="subChallengeCompleted">
                             <h3>Users Completed Challenge ({completed.length})</h3>
-                            {completed.map(user => <div>{user}</div>)}
+                            {completed.map(user =>
+                                <Link to={`/users/${user}`}>
+                                    <div>{user}</div>
+                                </Link>
+                            )}   
                         </div>
                         <div className="challenge">
                             <h3>Challenge</h3>

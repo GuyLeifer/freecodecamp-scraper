@@ -3,27 +3,13 @@
 
 .chart {
     font-family: 'Bebas Neue', cursive;
+    margin: 1% 1%;
     /* color: lightslategray; */
 }
 .firstLine {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 .recharts-wrapper {
     margin : 0 auto;
-}
-.redirect {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 140%;
-    cursor: pointer;
-}
-.redirect:hover {
-    color: #25D366;
-}
-.authorChart {
-    font-family: 'Varela Round', sans-serif;
-    font-size: 80%;
-}
-.authorsChartH2 {
-    font-family: 'Bebas Neue', cursive;
 }

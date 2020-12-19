@@ -29,10 +29,18 @@ function ChallengeId( { match } ) {
                 <div className="ChallengePage">
                     <div>Challenge Name:</div>
                     <h2>{challenge[0].name}</h2>
+                    <div>Super Challenge Name:</div>
+                    <Link to={`/challenges/${challenge[0].superBlock.toLowerCase().replaceAll(" ", "-")}`}>
+                        <h2>{challenge[0].superBlock}</h2>
+                    </Link>
                     <div className="ChallengeId">
                         <div className="ChallengeCompleted">
-                            <h3>Users Completed Challenge ({completed.length})</h3>
-                            {completed.map(user => <div>{user}</div>)}
+                            <h3>Users Completed Challenge ({completed.length})</h3>                           
+                                {completed.map(user =>
+                                    <Link to={`/users/${user}`}>
+                                        <div>{user}</div>
+                                    </Link>
+                                )}                   
                         </div>
                         <div className="subChallenges">
                             <h3>Sub - Challenges</h3>
@@ -44,7 +52,11 @@ function ChallengeId( { match } ) {
                         </div>
                         <div className="ChallengeStarted">
                             <h3>Users Started Challenge ({started.length})</h3>
-                            {started.map(user => <div>{user}</div>)}
+                            {started.map(user => 
+                                <Link to={`/users/${user}`}>
+                                    <div>{user}</div>
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>

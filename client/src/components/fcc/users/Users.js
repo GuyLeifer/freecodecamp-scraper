@@ -27,7 +27,7 @@ function Users() {
 
     return (
         <div>
-            <h2>All Users</h2>
+            <h2>All Users ({challengesByUser.length})</h2>
             {challengesByUser.map(user => (
                 <div className="userProgressesDiv">
                     <div className="username" onClick={() => setDisplay(user.username)}>{user.username}</div>

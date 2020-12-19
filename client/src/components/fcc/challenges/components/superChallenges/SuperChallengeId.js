@@ -32,7 +32,11 @@ function SuperChallengeId( { match } ) {
                     <div className="ChallengeId">
                         <div className="ChallengeCompleted">
                             <h3>Users Completed Challenge ({completed.length})</h3>
-                            {completed.map(user => <div>{user}</div>)}
+                            {completed.map(user =>
+                                <Link to={`/users/${user}`}>
+                                    <div>{user}</div>
+                                </Link>
+                            )}
                         </div>
                         <div className="Challenges">
                             <h3>Challenges ({superChallenge.challenges.length})</h3>
@@ -44,7 +48,11 @@ function SuperChallengeId( { match } ) {
                         </div>
                         <div className="ChallengeStarted">
                             <h3>Users Started Challenge ({started.length})</h3>
-                            {started.map(user => <div>{user}</div>)}
+                            {started.map(user =>
+                                <Link to={`/users/${user}`}>
+                                    <div>{user}</div>
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>

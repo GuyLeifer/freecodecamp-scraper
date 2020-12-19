@@ -81,7 +81,14 @@ router.get('/', async (req, res) => {
             }
         })
 
-        res.send([challengesByBlockName, challengesByName, challengesByDate]);
+        const usersCount = fcc.map(user => (
+            {
+                username: user.username,
+                count: user.progress.length
+            }
+        )).sort((a, b) => b.count - a.count);
+
+        res.send([challengesByBlockName, challengesByName, challengesByDate, usersCount]);
     } catch (err) {
         console.log(err.message);
     }

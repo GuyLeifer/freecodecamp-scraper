@@ -161,7 +161,7 @@ async function fetchSuperChallenge(superChallengeId) {
             }
         })
     })
-    counter.forEach((user, index) => {
+    counter.forEach((user) => {
         if(user.count === challengeMap.length) completed.push(user.user)
     })
 
@@ -201,7 +201,7 @@ async function fetchChallenge(challengeId) {
             }
         })
     })
-    counter.forEach((user, index) => {
+    counter.forEach((user) => {
         if(user.count === challengeMap.length) completed.push(user.user)
     })
 
@@ -228,7 +228,7 @@ async function fetchSubChallenge(subChallengeId) {
         } 
     })
     let completed = [];
-    fcc.forEach((user, index) => {
+    fcc.forEach((user) => {
         if(user.progress.find(challenge => challenge.name === subChallengeId)) completed.push(user.username)
     })
 
