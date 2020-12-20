@@ -10,10 +10,11 @@ client side also use "firebase" service for authentication, ("firebase" package)
 
 ## Instructions To Users
 1. clone this repo to your device. 
-2. open the folder in your editor.   
-3. make sure your device has docker and docker-compose installed.
-4. in the main folder run the command "docker-compose build".
-5. in the main folder run the command "docker-compose up".
+2. open the folder in your editor. 
+3. run "npm i" in the server folder and in client folder.   
+4. make sure your device has docker and docker-compose installed.
+5. in the main folder run the command "docker-compose build".
+6. in the main folder run the command "docker-compose up".
 
 ## Home Page
 the home page contains a dashboard with four charts: 

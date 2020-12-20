@@ -30,6 +30,7 @@ services:
     stdin_open: true
     volumes:
       - ./client:/usr/app/client
+      # - '/usr/app/server/node_modules'
     ports:
       - '4000:3000'
     depends_on:
