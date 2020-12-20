@@ -8,6 +8,7 @@ const scraper = require('../../scraper')
 const { users } = require('../../users')
 
 router.get('/', async (req, res) => {
+    console.log(users)
     const fcc = await scraper(users);
     res.send(fcc);
 })

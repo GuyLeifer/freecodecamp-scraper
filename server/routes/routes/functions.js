@@ -64,7 +64,6 @@ async function fetchAllChallenges() {
     const { data: pageData } = await axios.get("https://www.freecodecamp.org/page-data/learn/page-data.json");
     let cache = pageData.result.data.allChallengeNode.edges;
     cache.forEach(({ node: challenge }) => {
-        console.log(challenge)
         if (!challengeMap.hasOwnProperty(challenge.block)) {
             challengeMap[challenge.block] = { name: challenge.fields.blockName, superBlock: challenge.superBlock, subChallenges: [{ name: challenge.title, dashedName: challenge.dashedName }] };
         } else {
@@ -96,6 +95,7 @@ async function fetchSuperChallenge(superChallengeId) {
     const challengeMap = [];
     const { data: pageData } = await axios.get("https://www.freecodecamp.org/page-data/learn/page-data.json");
     let cache = pageData.result.data.allChallengeNode.edges;
+    cache = cache.filter(({ node: challenge }) => challenge.superBlock.toLowerCase() === superChallengeId)
     cache.forEach(({ node: challenge }) => {
         if (challengeMap.find(superBlock => superBlock.name.toLowerCase() === superChallengeId)) {
 
@@ -165,7 +165,7 @@ async function fetchSuperChallenge(superChallengeId) {
         if(user.count === challengeMap.length) completed.push(user.user)
     })
 
-    return [challengeMap, completed, started]
+    return [challengeMap[0], completed, started]
 }
 async function fetchChallenge(challengeId) {
     const fcc = await scraper(users);

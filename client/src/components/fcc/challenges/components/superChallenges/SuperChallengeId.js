@@ -15,7 +15,7 @@ function SuperChallengeId( { match } ) {
     useEffect(() => {
         (async () => {
             const { data }  = await axios.get(`/fcc/challenges/super-challenge/${superChallengeId}`);
-            setSuperChallenge(data[0][0]);
+            setSuperChallenge(data[0]);
             setCompleted(data[1]);
             setStarted(data[2]);
         })()
