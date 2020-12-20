@@ -55,12 +55,16 @@ function Navbar() {
                 <Link to="/challenges">
                     <img className="navIcon" src={chellengesIcon} alt="Challenges" />
                 </Link>
-            </div>
-            <div className="addUserLink">
-                <img className="navIcon" src={plusIcon} alt="Add User" onClick={() => setAddUser(prev => !prev)}/>
-                <AddUser modalIsOpen={addUser} setModalIsOpen={setAddUser}/>
-            </div>
-            {currentUser && <Searchbar />}     
+            </div>          
+            {currentUser && 
+                <>
+                    <div className="addUserLink">
+                        <img className="navIcon" src={plusIcon} alt="Add User" onClick={() => setAddUser(prev => !prev)}/>
+                        <AddUser modalIsOpen={addUser} setModalIsOpen={setAddUser}/>
+                    </div>
+                    <Searchbar />
+                </>
+            }     
             <div className="aboutLink">
                 <Link to="/about">
                     <img className="navIcon" src={aboutIcon} alt="About" />

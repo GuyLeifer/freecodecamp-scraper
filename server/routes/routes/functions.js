@@ -4,7 +4,7 @@ const scraper = require('../../scraper');
 const { users } = require('../../users')
 
 async function fetchSuperChallenges() {
-    const challengeMap = [];
+    let challengeMap = [];
     const { data: pageData } = await axios.get("https://www.freecodecamp.org/page-data/learn/page-data.json");
     let cache = pageData.result.data.allChallengeNode.edges;
     cache.forEach(({ node: challenge }) => {
@@ -28,19 +28,19 @@ async function fetchSuperChallenges() {
                 }
             )
         } else {
-            challengeMap.forEach((superBlock) => {
-                const find = superBlock.challenges.findIndex(block => block.name === challenge.fields.blockName);
-                if (find !== -1) {
-                    if (!(superBlock.challenges[find].subChallenges.find(subChallenge => subChallenge.name === challenge.title))) {
-                        superBlock.challenges[find].subChallenges.push(
-                            {
-                                name: challenge.title, 
-                                dashedName: challenge.dashedName
-                            }
-                        )
-                    }
-                } else {
-                    superBlock.challenges.push(
+            challengeMap.forEach((superBlock, superBlockIndex) => { 
+                const blockIndex = superBlock.challenges.findIndex((block) => block.name === challenge.fields.blockName)
+                    if (blockIndex !== -1) {                    
+                        if (!(challengeMap[superBlockIndex].challenges[blockIndex].subChallenges.find((subChallenge) => subChallenge.name === challenge.title))) {
+                            challengeMap[superBlockIndex].challenges[blockIndex].subChallenges.push(
+                                {
+                                    name: challenge.title, 
+                                    dashedName: challenge.dashedName
+                                }
+                            )
+                        }
+                    } else if (superBlock.name === challenge.superBlock) {
+                    challengeMap[superBlockIndex].challenges.push(
                         {
                             name: challenge.fields.blockName,
                             dashedName: challenge.block,
@@ -51,7 +51,7 @@ async function fetchSuperChallenges() {
                                 }
                             ]
                         }
-                    )           
+                    )
                 }
             })
         }

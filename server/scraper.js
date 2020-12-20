@@ -96,8 +96,6 @@ const scraper = async (usernames) => {
         date.setDate(date.getDate() + 1)
     }
     
-    console.log(progresses)
-    
     return progresses;
 }
 
