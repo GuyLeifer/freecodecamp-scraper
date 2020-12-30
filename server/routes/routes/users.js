@@ -9,7 +9,8 @@ const { users } = require('../../users')
 
 router.get('/', async (req, res) => {
     const fcc = await scraper(users);
-    res.send(fcc);
+    const byDate = fcc.map(user => ({username: user.username, progress: user.progress.sort((a,b) => a.completedDate - b.completedDate)}))
+    res.send(byDate);
 })
 router.get('/:userId', async (req, res) => {
     const user = [req.params.userId];

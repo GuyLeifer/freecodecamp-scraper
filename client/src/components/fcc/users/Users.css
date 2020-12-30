@@ -3,10 +3,13 @@
 .userProgressesDiv {
     font-family: 'BioRhyme', serif;
 }
-.progress {
+.prog {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.userProgresses {
+    margin: 1%;
 }
 .progressDiv {
     text-align: left;
@@ -68,4 +71,8 @@
 }
 .navigateIcon {
     height: 50px;
+}
+.title {
+    font-size: 180%;
+    cursor: pointer;
 }
