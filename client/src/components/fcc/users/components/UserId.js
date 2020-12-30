@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './UserId.css';
 
+import Challenges from './Challenges';
 import deleteIcon from '../images/deleteIcon.png';
 
 import axios from 'axios';
@@ -16,6 +17,7 @@ function UserId({ match }) {
     useEffect(() => {
         (async () => {
             const { data }  = await axios.get(`/fcc/users/${userId}`);
+            console.log(data[0])
             setUser(data[0]);
             setLoading(false)
         })()
@@ -41,28 +43,7 @@ function UserId({ match }) {
                         </div>
                     </div>
                     <div>  
-                        {user.progress.map(progress => 
-                            <div className="progress">
-                                <div className="progressDate progressDiv">
-                                    {new Date(progress.completedDate).toLocaleString()}
-                                </div>
-                                <div className="progressDiv progressSuperBlockName">
-                                    <Link to={`/challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}`} >
-                                        <div className="SuperBlockName">{progress.superBlock}</div>
-                                    </Link>
-                                </div>
-                                <div className="progressDiv progressBlockName">
-                                    <Link to={`/challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}/${progress.block}`} >
-                                        <div className="BlockName">{progress.blockName}</div>
-                                    </Link>
-                                </div>
-                                <div className="progressDiv progressName">
-                                    <Link to={`/challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}/${progress.block}/${progress.name}`}>
-                                        <span className="Name">{progress.name}</span>
-                                    </Link>
-                                </div>
-                            </div>
-                        )}
+                        <Challenges progresses={user.progress} />                    
                     </div>       
                 </div>
                 }  

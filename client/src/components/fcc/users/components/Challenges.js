@@ -24,17 +24,17 @@ function Challenges({ progresses }) {
                     {new Date(progress.completedDate).toLocaleString()}
                 </div>
                 <div className="progressDiv progressSuperBlockName">
-                    <Link to={`challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}`} >
+                    <Link to={`/challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}`} >
                         <div className="SuperBlockName">{progress.superBlock}</div>
                     </Link>
                 </div>
                 <div className="progressDiv progressBlockName">
-                    <Link to={`challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}/${progress.block}`} >
+                    <Link to={`/challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}/${progress.block}`} >
                         <div className="BlockName">{progress.blockName}</div>
                     </Link>
                 </div>
                 <div className="progressDiv progressName">
-                    <Link to={`challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}/${progress.block}/${progress.name}`}>
+                    <Link to={`/challenges/${(progress.superBlock).toLowerCase().replaceAll(" ", "-")}/${progress.block}/${progress.name}`}>
                         <span className="Name">{progress.name.replaceAll("-", " ").split(" ").map(letter => letter.charAt(0).toUpperCase() + letter.slice(1)).join(" ")}</span>
                     </Link>
                 </div>
