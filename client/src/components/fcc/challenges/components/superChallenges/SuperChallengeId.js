@@ -4,25 +4,35 @@ import './SuperChallengeId.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-function SuperChallengeId( { match } ) {
+import Loader from '../../../../loader/Loader';
+
+function SuperChallengeId({ match }) {
 
     const superChallengeId = match.params.superChallenge;
 
     const [superChallenge, setSuperChallenge] = useState({});
     const [completed, setCompleted] = useState([]);
     const [started, setStarted] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         (async () => {
-            const { data }  = await axios.get(`/fcc/challenges/super-challenge/${superChallengeId}`);
+            const { data } = await axios.get(`/fcc/challenges/super-challenge/${superChallengeId}`);
             setSuperChallenge(data[0]);
             setCompleted(data[1]);
             setStarted(data[2]);
+            setLoading(false)
         })()
     }, [])
-    
+
     return (
         <>
+            {loading &&
+                <div>
+                    <h2>Loading</h2>
+                    <Loader />
+                </div>
+            }
             {superChallenge.hasOwnProperty("name") ?
                 <div className="superChallengePage">
                     <div>Challenge Name:</div>
@@ -54,11 +64,11 @@ function SuperChallengeId( { match } ) {
                         </div>
                     </div>
                 </div>
-            : 
+                :
                 <></>
             }
         </>
-            
+
     )
 }
 

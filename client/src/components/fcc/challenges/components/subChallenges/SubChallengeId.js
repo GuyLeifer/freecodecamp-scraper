@@ -4,23 +4,33 @@ import './SubChallengeId.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-function SubChallengeId( { match } ) {
+import Loader from '../../../../loader/Loader';
+
+function SubChallengeId({ match }) {
 
     const subChallengeId = match.params.subChallenge;
 
     const [subChallenge, setSubChallenge] = useState({});
     const [completed, setCompleted] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         (async () => {
-            const { data }  = await axios.get(`/fcc/challenges/sub-challenge/${subChallengeId}`);
+            const { data } = await axios.get(`/fcc/challenges/sub-challenge/${subChallengeId}`);
             setSubChallenge(data[0]);
             setCompleted(data[1]);
+            setLoading(false)
         })()
     }, [])
-    
+
     return (
         <>
+            {loading &&
+                <div>
+                    <h2>Loading</h2>
+                    <Loader />
+                </div>
+            }
             {subChallenge.hasOwnProperty("name") > 0 ?
                 <div className="subChallengePage">
                     <div>Sub-Challenge Name:</div>
@@ -38,7 +48,7 @@ function SubChallengeId( { match } ) {
                                 <Link to={`/users/${user}`}>
                                     <div>{user}</div>
                                 </Link>
-                            )}   
+                            )}
                         </div>
                         <div className="challenge">
                             <h3>Challenge</h3>
@@ -48,11 +58,11 @@ function SubChallengeId( { match } ) {
                         </div>
                     </div>
                 </div>
-            : 
+                :
                 <></>
             }
         </>
-            
+
     )
 }
 

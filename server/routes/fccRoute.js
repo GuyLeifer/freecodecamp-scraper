@@ -12,6 +12,7 @@ router.use('/dashboard', require('./routes/dashboard'))
 router.use('/users', require('./routes/users'))
 router.use('/challenges', require('./routes/challenges'))
 router.use('/search', require('./routes/search'))
+router.use('/datastore', require('./routes/datastore'))
 
 
 router.get('/by-block-name', async (req, res) => {
@@ -28,7 +29,7 @@ router.get('/by-block-name', async (req, res) => {
         let challengesByBlockName = [];
         names.forEach(name => {
             const index = challengesByBlockName.findIndex(challenge => challenge.name === name)
-            if (index === -1) {               
+            if (index === -1) {
                 challengesByBlockName.push(
                     {
                         name: name,
@@ -59,7 +60,7 @@ router.get('/by-name', async (req, res) => {
         let challengesByName = [];
         names.forEach(name => {
             const index = challengesByName.findIndex(challenge => challenge.name === name)
-            if (index === -1) {               
+            if (index === -1) {
                 challengesByName.push(
                     {
                         name: name,
@@ -90,7 +91,7 @@ router.get('/by-date', async (req, res) => {
         let challengesByDate = [];
         dates.forEach(date => {
             const index = challengesByDate.findIndex(challenge => challenge.date === date)
-            if (index === -1) {               
+            if (index === -1) {
                 challengesByDate.push(
                     {
                         date: date,

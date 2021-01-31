@@ -1,7 +1,7 @@
 const axios = require('axios');
-
+const { Datastore } = require('@google-cloud/datastore');
+const datastore = new Datastore();
 const scraper = require('../../scraper');
-const { users } = require('../../users')
 
 async function fetchSuperChallenges() {
     let challengeMap = [];
@@ -9,45 +9,45 @@ async function fetchSuperChallenges() {
     let cache = pageData.result.data.allChallengeNode.edges;
     cache.forEach(({ node: challenge }) => {
         if (!(challengeMap.find(superBlock => superBlock.name === challenge.superBlock))) {
-            challengeMap.push( 
-                {  
+            challengeMap.push(
+                {
                     name: challenge.superBlock,
                     challenges: [
                         {
-                        name: challenge.fields.blockName,
-                        dashedName: challenge.block,
-                        subChallenges: [
-                            { 
-                                name: challenge.title, 
-                                dashedName: challenge.dashedName 
-                            }
-                        ] 
+                            name: challenge.fields.blockName,
+                            dashedName: challenge.block,
+                            subChallenges: [
+                                {
+                                    name: challenge.title,
+                                    dashedName: challenge.dashedName
+                                }
+                            ]
                         }
-                    ], 
-                    
+                    ],
+
                 }
             )
         } else {
-            challengeMap.forEach((superBlock, superBlockIndex) => { 
+            challengeMap.forEach((superBlock, superBlockIndex) => {
                 const blockIndex = superBlock.challenges.findIndex((block) => block.name === challenge.fields.blockName)
-                    if (blockIndex !== -1) {                    
-                        if (!(challengeMap[superBlockIndex].challenges[blockIndex].subChallenges.find((subChallenge) => subChallenge.name === challenge.title))) {
-                            challengeMap[superBlockIndex].challenges[blockIndex].subChallenges.push(
-                                {
-                                    name: challenge.title, 
-                                    dashedName: challenge.dashedName
-                                }
-                            )
-                        }
-                    } else if (superBlock.name === challenge.superBlock) {
+                if (blockIndex !== -1) {
+                    if (!(challengeMap[superBlockIndex].challenges[blockIndex].subChallenges.find((subChallenge) => subChallenge.name === challenge.title))) {
+                        challengeMap[superBlockIndex].challenges[blockIndex].subChallenges.push(
+                            {
+                                name: challenge.title,
+                                dashedName: challenge.dashedName
+                            }
+                        )
+                    }
+                } else if (superBlock.name === challenge.superBlock) {
                     challengeMap[superBlockIndex].challenges.push(
                         {
                             name: challenge.fields.blockName,
                             dashedName: challenge.block,
                             subChallenges: [
-                                { 
-                                    name: challenge.title, 
-                                    dashedName: challenge.dashedName 
+                                {
+                                    name: challenge.title,
+                                    dashedName: challenge.dashedName
                                 }
                             ]
                         }
@@ -75,7 +75,7 @@ async function fetchAllChallenges() {
 }
 
 const capitalize = (str) => {
-    str = str.replace(/-/g," ");
+    str = str.replace(/-/g, " ");
     let splitStr = str.toLowerCase().split(" ");
 
     for (let i = 0; i < splitStr.length; i++) {
@@ -89,9 +89,13 @@ const capitalize = (str) => {
 }
 
 async function fetchSuperChallenge(superChallengeId) {
-    superChallengeId = superChallengeId.replace(/-/g," ")
-    
+    superChallengeId = superChallengeId.replace(/-/g, " ")
+
+    const query = datastore.createQuery('User');
+    const [allUsers] = await datastore.runQuery(query)
+    const users = allUsers.map(user => user.name)
     const fcc = await scraper(users);
+
     const challengeMap = [];
     const { data: pageData } = await axios.get("https://www.freecodecamp.org/page-data/learn/page-data.json");
     let cache = pageData.result.data.allChallengeNode.edges;
@@ -105,7 +109,7 @@ async function fetchSuperChallenge(superChallengeId) {
                     if (!(superBlock.challenges[find].subChallenges.find(subChallenge => subChallenge.name === challenge.title))) {
                         superBlock.challenges[find].subChallenges.push(
                             {
-                                name: challenge.title, 
+                                name: challenge.title,
                                 dashedName: challenge.dashedName
                             }
                         )
@@ -116,58 +120,63 @@ async function fetchSuperChallenge(superChallengeId) {
                             name: challenge.fields.blockName,
                             dashedName: challenge.block,
                             subChallenges: [
-                                { 
-                                    name: challenge.title, 
-                                    dashedName: challenge.dashedName 
+                                {
+                                    name: challenge.title,
+                                    dashedName: challenge.dashedName
                                 }
                             ]
                         }
-                    )           
+                    )
                 }
             })
         } else {
-            challengeMap.push( 
-                {  
+            challengeMap.push(
+                {
                     name: challenge.superBlock,
                     challenges: [
                         {
-                        name: challenge.fields.blockName,
-                        dashedName: challenge.block,
-                        subChallenges: [
-                            { 
-                                name: challenge.title, 
-                                dashedName: challenge.dashedName 
-                            }
-                        ] 
+                            name: challenge.fields.blockName,
+                            dashedName: challenge.block,
+                            subChallenges: [
+                                {
+                                    name: challenge.title,
+                                    dashedName: challenge.dashedName
+                                }
+                            ]
                         }
-                    ], 
-                    
+                    ],
+
                 }
             )
         }
     })
     let started = [];
     let completed = [];
-    let counter = users.map(user => ({user: user, count: 0}));
+    let counter = users.map(user => ({ user: user, count: 0 }));
     fcc.forEach(user => {
-        if(user.progress.find(challenge => challenge.superBlock.toLowerCase() === superChallengeId)) {
+        if (user.progress.find(challenge => challenge.superBlock.toLowerCase() === superChallengeId)) {
             started.push(user.username);
         }
     })
     fcc.forEach((user, index) => {
         user.progress.forEach(challenge => {
-            if(challenge.superBlock.toLowerCase() === superChallengeId) {
+            if (challenge.superBlock.toLowerCase() === superChallengeId) {
                 counter[index].count++
             }
         })
     })
     counter.forEach((user) => {
-        if(user.count === challengeMap.length) completed.push(user.user)
+        if (user.count === challengeMap.length) completed.push(user.user)
     })
 
     return [challengeMap[0], completed, started]
 }
 async function fetchChallenge(challengeId) {
+
+    const query = datastore.createQuery('User');
+    const [allUsers] = await datastore.runQuery(query)
+    const users = allUsers.map(user => user.name)
+
     const fcc = await scraper(users);
     const challengeMap = [];
     const { data: pageData } = await axios.get("https://www.freecodecamp.org/page-data/learn/page-data.json");
@@ -179,36 +188,41 @@ async function fetchChallenge(challengeId) {
                     name: challenge.fields.blockName,
                     superBlock: challenge.superBlock,
                     subChallenge: {
-                        name: challenge.title, 
-                        dashedName: challenge.dashedName 
-                    }                
+                        name: challenge.title,
+                        dashedName: challenge.dashedName
+                    }
                 }
             )
-        } 
+        }
     })
     let started = [];
     let completed = [];
-    let counter = users.map(user => ({user: user, count: 0}));
+    let counter = users.map(user => ({ user: user, count: 0 }));
     fcc.forEach(user => {
-        if(user.progress.find(challenge => challenge.block === challengeId)) {
+        if (user.progress.find(challenge => challenge.block === challengeId)) {
             started.push(user.username);
         }
     })
     fcc.forEach((user, index) => {
         user.progress.forEach(challenge => {
-            if(challenge.block === challengeId) {
+            if (challenge.block === challengeId) {
                 counter[index].count++
             }
         })
     })
     counter.forEach((user) => {
-        if(user.count === challengeMap.length) completed.push(user.user)
+        if (user.count === challengeMap.length) completed.push(user.user)
     })
 
     return [challengeMap, completed, started]
 }
 
 async function fetchSubChallenge(subChallengeId) {
+
+    const query = datastore.createQuery('User');
+    const [allUsers] = await datastore.runQuery(query)
+    const users = allUsers.map(user => user.name)
+
     const fcc = await scraper(users);
     let challengeMap;
     const { data: pageData } = await axios.get("https://www.freecodecamp.org/page-data/learn/page-data.json");
@@ -216,20 +230,20 @@ async function fetchSubChallenge(subChallengeId) {
     cache.forEach(async ({ node: challenge }) => {
         if (challenge.dashedName === subChallengeId) {
             challengeMap =
-                {
-                    name: challenge.title, 
-                    dashedName: challenge.dashedName,             
-                    challenge: {
-                        name: challenge.fields.blockName,
-                        dashedName: challenge.block,
-                        superBlock: challenge.superBlock
-                    },
-                }
-        } 
+            {
+                name: challenge.title,
+                dashedName: challenge.dashedName,
+                challenge: {
+                    name: challenge.fields.blockName,
+                    dashedName: challenge.block,
+                    superBlock: challenge.superBlock
+                },
+            }
+        }
     })
     let completed = [];
     fcc.forEach((user) => {
-        if(user.progress.find(challenge => challenge.name === subChallengeId)) completed.push(user.username)
+        if (user.progress.find(challenge => challenge.name === subChallengeId)) completed.push(user.username)
     })
 
     return [challengeMap, completed]

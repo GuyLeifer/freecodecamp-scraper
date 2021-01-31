@@ -5,11 +5,16 @@ const axios = require('axios')
 const fs = require('fs');
 
 const scraper = require('../../scraper')
-const { users } = require('../../users')
+
+const { Datastore } = require('@google-cloud/datastore');
+const datastore = new Datastore();
 
 router.get('/', async (req, res) => {
+    const query = datastore.createQuery('User');
+    const [allUsers] = await datastore.runQuery(query)
+    const users = allUsers.map(user => user.name)
     const fcc = await scraper(users);
-    const byDate = fcc.map(user => ({username: user.username, progress: user.progress.sort((a,b) => a.completedDate - b.completedDate)}))
+    const byDate = fcc.map(user => ({ username: user.username, progress: user.progress.sort((a, b) => a.completedDate - b.completedDate) }))
     res.send(byDate);
 })
 router.get('/:userId', async (req, res) => {
@@ -20,47 +25,41 @@ router.get('/:userId', async (req, res) => {
 
 router.put('/add-user/:username', async (req, res) => {
     const { username } = req.params;
-    const myProfile = await fetchUserProfile(username);
-    if (!myProfile) {
-        res.send("No Such User")
-    } else {
-        const public = (myProfile || {}).profileUI ? isFullyPublic(myProfile) : false;
-        if (!public || !myProfile) {
-            res.send("Not a Public Profile");
+    try {
+        const myProfile = await fetchUserProfile(username);
+        if (!myProfile) {
+            res.send("No Such User")
         } else {
-            fs.readFile('users.json', 'utf-8', function(err, data){
-                if (err) throw err;
-                let usersArr = JSON.parse(data).users
-                if (usersArr.find(user => user === username)) {
+            const public = (myProfile || {}).profileUI ? isFullyPublic(myProfile) : false;
+            if (!public || !myProfile) {
+                res.send("Not a Public Profile");
+            } else {
+                const query = datastore.createQuery('User');
+                const [allUsers] = await datastore.runQuery(query)
+                const users = allUsers.map(user => user.name)
+                if (users.find(user => user === username)) {
+                    console.log(11)
                     res.send("User Already Exists");
                 } else {
-                    usersArr.push(username);
-                    usersArr = usersArr.sort();
-                    const newValue = `{ "users": [${usersArr.map(user => `\"${user}\"`)}] }`;
-            
-                    fs.writeFile('users.json', newValue, 'utf-8', function (err) {
-                        if (err) throw err;
-                        res.send(usersArr);
-                    });
+                    const user = await insertUser({ name: username })
+                    res.send(user)
                 }
-            });
+            }
         }
+    } catch (err) {
+        res.send(err)
     }
 })
 
 router.put('/delete-user/:username', async (req, res) => {
     const { username } = req.params;
-    fs.readFile('users.json', 'utf-8', function(err, data){
-        if (err) throw err;
-        let usersArr = JSON.parse(data).users
-        usersArr = usersArr.filter(user => user !== username);
-        const newValue = `{ "users": [${usersArr.map(user => `\"${user}\"`)}] }`;
-
-        fs.writeFile('users.json', newValue, 'utf-8', function (err) {
-            if (err) throw err;
-            res.send(usersArr);
-        });
-    });
+    try {
+        const userKey = datastore.key(['User', name = username])
+        await datastore.delete(userKey)
+        res.send(userKey)
+    } catch (err) {
+        res.status(202).send(err.message)
+    }
 })
 
 async function fetchUserProfile(username) {
@@ -72,8 +71,16 @@ async function fetchUserProfile(username) {
 }
 
 function isFullyPublic(profile) {
-    const {isLocked, showAbout, showCerts, showHeatMap, showLocation, showName, showPoints, showPortfolio, showTimeLine} = profile.profileUI;
+    const { isLocked, showAbout, showCerts, showHeatMap, showLocation, showName, showPoints, showPortfolio, showTimeLine } = profile.profileUI;
     return !isLocked && showAbout && showCerts && showHeatMap && showLocation && showName && showPoints && showPortfolio && showTimeLine;
 }
+
+const insertUser = async (data) => {
+    const Key = datastore.key(['User', data.name])
+    return datastore.save({
+        key: Key,
+        data: data,
+    });
+};
 
 module.exports = router;

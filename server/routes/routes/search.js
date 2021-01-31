@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const { fetchSuperChallenges } = require('./functions');
-const { users } = require('../../users')
+
+const { Datastore } = require('@google-cloud/datastore');
+const datastore = new Datastore();
 
 router.get('/:word', async (req, res) => {
     const { word } = req.params;
@@ -10,14 +12,14 @@ router.get('/:word', async (req, res) => {
         res.send([])
     } else {
         const allChallenges = await fetchSuperChallenges();
-        const superChallenges = allChallenges.filter(superChallenge => 
+        const superChallenges = allChallenges.filter(superChallenge =>
             superChallenge.name.toLowerCase().includes(word.toLowerCase())
         ).map(superChallenge => superChallenge.name);
-        
+
         let challenges = [];
         allChallenges.forEach(superChallenge => (
             superChallenge.challenges.forEach(challenge => {
-                if(challenge.name.toLowerCase().includes(word.toLowerCase())) {
+                if (challenge.name.toLowerCase().includes(word.toLowerCase())) {
                     challenges.push(
                         {
                             name: challenge.name,
@@ -33,7 +35,7 @@ router.get('/:word', async (req, res) => {
         allChallenges.forEach(superChallenge => (
             superChallenge.challenges.forEach(challenge => {
                 challenge.subChallenges.forEach(subChallenge => {
-                    if(subChallenge.name.toLowerCase().includes(word.toLowerCase())) {
+                    if (subChallenge.name.toLowerCase().includes(word.toLowerCase())) {
                         subChallenges.push(
                             {
                                 name: subChallenge.name,
@@ -46,10 +48,14 @@ router.get('/:word', async (req, res) => {
                 })
             })
         ))
-        
+
+        const query = datastore.createQuery('User');
+        const [allUsers] = await datastore.runQuery(query)
+        const users = allUsers.map(user => user.name)
+
         const usersSearch = users.filter(user => user.includes(word.toLowerCase()))
         // res.send(subChallenges)
-        res.send([usersSearch.slice(0,3), superChallenges.slice(0,3), challenges.slice(0,3), subChallenges.slice(0,3)]);
+        res.send([usersSearch.slice(0, 3), superChallenges.slice(0, 3), challenges.slice(0, 3), subChallenges.slice(0, 3)]);
     }
 })
 

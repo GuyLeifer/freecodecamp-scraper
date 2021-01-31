@@ -2,13 +2,19 @@ const express = require('express');
 const router = express.Router();
 
 const scraper = require('../../scraper')
-const { users } = require('../../users')
+
+const { Datastore } = require('@google-cloud/datastore');
+const datastore = new Datastore();
 
 router.get('/', async (req, res) => {
+    const query = datastore.createQuery('User');
+    const [allUsers] = await datastore.runQuery(query)
+    const users = allUsers.map(user => user.name)
+
     const fcc = await scraper(users);
     // by block name
     try {
-    let names = [];
+        let names = [];
         fcc.forEach(user => {
             user.progress.forEach(challenge => {
                 const name = challenge.blockName;
@@ -19,7 +25,7 @@ router.get('/', async (req, res) => {
         let challengesByBlockName = [];
         names.forEach(name => {
             const index = challengesByBlockName.findIndex(challenge => challenge.name === name)
-            if (index === -1) {               
+            if (index === -1) {
                 challengesByBlockName.push(
                     {
                         name: name,
@@ -44,7 +50,7 @@ router.get('/', async (req, res) => {
         let challengesByName = [];
         names.forEach(name => {
             const index = challengesByName.findIndex(challenge => challenge.name === name)
-            if (index === -1) {               
+            if (index === -1) {
                 challengesByName.push(
                     {
                         name: name,
@@ -69,7 +75,7 @@ router.get('/', async (req, res) => {
         let challengesByDate = [];
         dates.forEach(date => {
             const index = challengesByDate.findIndex(challenge => challenge.date === date)
-            if (index === -1) {               
+            if (index === -1) {
                 challengesByDate.push(
                     {
                         date: date,

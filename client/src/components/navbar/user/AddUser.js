@@ -9,19 +9,19 @@ import axios from 'axios';
 Modal.setAppElement('div');
 
 const customStyles = {
-    content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-30%',
-        transform             : 'translate(-50%, -50%)',
-        background            : '#2C3A47',
-        color                 : '#2C3A47',
-        borderRadius          : '10%',
-        textAlign             : 'center'
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-30%',
+        transform: 'translate(-50%, -50%)',
+        background: '#2C3A47',
+        color: '#2C3A47',
+        borderRadius: '10%',
+        textAlign: 'center'
     }
-    
+
 };
 
 function ChangeFile({ modalIsOpen, setModalIsOpen }) {
@@ -35,7 +35,8 @@ function ChangeFile({ modalIsOpen, setModalIsOpen }) {
         try {
             setLoading(true)
             const user = await axios.put(`/fcc/users/add-user/${username}`)
-            if(user.data) {
+            console.log(user)
+            if (user.data) {
                 if (user.data === "User Already Exists" || user.data === "No Such User" || user.data === "Not a Public Profile") {
                     setError(user.data)
                     setLoading(false)
@@ -46,7 +47,8 @@ function ChangeFile({ modalIsOpen, setModalIsOpen }) {
                 }
             }
         } catch (err) {
-            console.log(err.message)
+            console.log(err)
+            setLoading(false)
         }
     }
 
@@ -63,21 +65,21 @@ function ChangeFile({ modalIsOpen, setModalIsOpen }) {
 
     return (
         <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => exitModal()}
-        style={customStyles}
-        >   
+            isOpen={modalIsOpen}
+            onRequestClose={() => exitModal()}
+            style={customStyles}
+        >
             <Card className="card">
                 <Form onSubmit={handleSubmit}>
                     <Form.Group id="userAddForm" >
                         <Form.Label id="userLabel">Username:</Form.Label>
                         <Form.Control id="userUpload" type="text" onChange={(e) => changeUserName(e.target.value)} required />
-                        {error ? <div className="error">{error}</div> : null}                        
+                        {error ? <div className="error">{error}</div> : null}
                     </Form.Group>
-                    <Button disabled={loading} className="w-20" type="submit">
-                            Submit
+                    {loading && <div className="miniLoader"></div>}
+                    <Button disabled={loading} className="w-20" type="submit" variant="outline-secondary">
+                        Submit
                         </Button>
-                        { loading && <div>Loading...</div>}
                 </Form>
             </Card>
         </Modal>
